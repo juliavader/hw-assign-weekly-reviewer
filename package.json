@@ -1,0 +1,24 @@
+{
+  "name": "hw-assign-weekly-reviewer",
+  "version": "1.0.0",
+  "description": "This project is a github action to assign weekly reviewers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juliavader/hw-assign-weekly-reviewer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/juliavader/hw-assign-weekly-reviewer/issues"
+  },
+  "homepage": "https://github.com/juliavader/hw-assign-weekly-reviewer#readme",
+  "dependencies": {
+    "@actions/core": "^1.9.1",
+    "@actions/github": "^5.0.3"
+  }
+}
