@@ -1,19 +1,20 @@
 # hw-assign-weekly-reviewer
-This project is a github action to assign weekly reviewers
+This project is a github action to assign weekly reviewers to a user pull request.
 
-
-## Reviewers
-
+## Required
 ## `reviewers`
 
-**Required** userNames of user that are linked to project in an array. Default `"juliavader, bcarrel"`.
+**Required** reviewers as array of github usernames 
+
+## `githubToken`
 
 ## Outputs
 
-Assigns a user to the pr.
+Assigns one of the same reviewer weekly to your pull requests.
 
 ## Example usage
 
 uses: actions/hw-assign-weekly-reviewer@v1.1
 with:
-  reviewers: 'juliavader, bcarrel,codedams'
+  reviewers: ['juliavader', 'bcarrel', 'codedams', 'mgouaillierhw', 'mdeoliveira-hw', 'gregamann']
+  githubToken: ${{ secrets.GITHUB_TOKEN }}

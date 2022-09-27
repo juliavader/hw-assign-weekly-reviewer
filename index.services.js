@@ -11,7 +11,6 @@ function daysIntoYear(date){
   return (Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) - Date.UTC(date.getFullYear(), 0, 0)) / 24 / 60 / 60 / 1000;
 }
 
-
 const generateMapping = (individuals) => {
   const seed = daysIntoYear(getMonday(new Date()))
   const chance = new Chance(seed)
@@ -42,7 +41,6 @@ const checkInexistantReviewer =  (reviewers, consumer) => {
     throw new Error(`Couldn't find user ${inexistantUser.map(el => el)} in existing reviewers`);
   }
 }
-
 
 const errorHandler = (pull_request, assigne, reviewers, consumerError, core) => {
   if (!pull_request) {
