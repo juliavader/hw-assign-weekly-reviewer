@@ -5,7 +5,7 @@ const {getPotentialReviewers,  errorHandler, checkInexistantReviewer} = require(
 
 async function run() {
   // get octokit 
-  const token = core.getInput('githubToken');
+  const token = core.getInput('github-token');
   const octokit = github.getOctokit(token)
   
   //get repo info

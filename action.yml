@@ -1,7 +1,7 @@
 name: 'Assign Weekly Reviewer'
 description: 'This project is a github action to assign weekly reviewers to a user pull request.'
 inputs:
-  githubToken:
+  github-token:
     description: 'secret github token'
     required: true
   reviewers:  # id of input
