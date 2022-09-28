@@ -34,9 +34,9 @@ async function run() {
   checkInexistantReviewer(potentialReviewers, consumer)
 
   const { data: requestedReviewers, error: requestReviewersError } = await octokit.rest.pulls.requestReviewers({
-    owner: github.context.repo.owner,
-    repo: github.context.repo.repo,
-    pull_number: github.context.payload.pull_request.number,
+    owner: pull_request.repository_owner,
+    repo: pull_request.event.pull_request.base.repo.repository.name,
+    pull_number: pull_request.event.number,
     reviewers: potentialReviewers
   })
   console.log("REST response: ", requestedReviewers);
