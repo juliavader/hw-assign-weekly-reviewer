@@ -17680,8 +17680,8 @@ async function run() {
   checkInexistantReviewer(potentialReviewers, consumer)
 
   const { data: requestedReviewers, error: requestReviewersError } = await octokit.rest.pulls.requestReviewers({
-    owner: pull_request.repo.name,
-    repo: pull_request.user.name,
+    owner: pull_request.user.login,
+    repo: pull_request.base.repo.name,
     pull_number: pull_request.number,
     reviewers: potentialReviewers
   })
