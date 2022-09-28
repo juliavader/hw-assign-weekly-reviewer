@@ -34,7 +34,6 @@ const generateMapping = (individuals) => {
 };
 
 const getPotentialReviewers = (reviewerGroup, assigne) => {
-  console.log(reviewerGroup)
   return  reviewerGroup.filter(reviewer => {
     return reviewer !== assigne
   })
@@ -17663,7 +17662,7 @@ async function run() {
   const assignee = pull_request.assignee.login
   const reviewersString = core.getInput('reviewers', { required: true });
 
-  
+
   
   // Get issue assignees
   const reviewers = generateMapping(reviewersString
@@ -17678,16 +17677,18 @@ async function run() {
   errorHandler(pull_request, assignee, reviewers, consumerError, core)
 
   const potentialReviewers = getPotentialReviewers(reviewers.filter(reviewer => reviewer.includes(assignee))[0], assignee)
+  console.log(potentialReviewers)
 
   checkInexistantReviewer(potentialReviewers, consumer)
 
   try {
-    await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers', {
+    await octokit.rest.pulls.requestReviewers({
       owner: github.context.repo.owner,
       repo: github.context.repo.repo,
       pull_number: github.context.payload.pull_request.number,
       reviewers: potentialReviewers
     })
+
   } catch (error) {
     core.setFailed(error.message);
   }

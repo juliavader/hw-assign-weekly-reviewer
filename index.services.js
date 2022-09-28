@@ -28,7 +28,6 @@ const generateMapping = (individuals) => {
 };
 
 const getPotentialReviewers = (reviewerGroup, assigne) => {
-  console.log(reviewerGroup)
   return  reviewerGroup.filter(reviewer => {
     return reviewer !== assigne
   })
