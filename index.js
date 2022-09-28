@@ -10,7 +10,7 @@ async function run() {
   
   //get repo info
   const { pull_request, event } = github.context.payload;
-  console.log("Pull request:" , pull_request)
+  console.log("Payload github context:" ,  github.context.payload)
 
   //get assigne and reviewer
   const assignee = pull_request.assignee.login
@@ -35,7 +35,7 @@ async function run() {
 
   const { data: requestedReviewers, error: requestReviewersError } = await octokit.rest.pulls.requestReviewers({
     owner: github.context.payload.repository_owner,
-    repo: github.context.payload.event.pull_request.base.repo.repository.name,
+    repo: pull_request.base.repo.repository.name,
     pull_number: github.context.payload.event.number,
     reviewers: potentialReviewers
   })
