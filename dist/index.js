@@ -17648,7 +17648,7 @@ var __webpack_exports__ = {};
 (() => {
 const github = __nccwpck_require__(6498);
 const core = __nccwpck_require__(7350);
-const {getPotentialReviewers,  errorHandler, checkInexistantReviewer} = __nccwpck_require__(6972)
+const {getPotentialReviewers, generateMapping, errorHandler, checkInexistantReviewer} = __nccwpck_require__(6972)
 
 
 async function run() {
@@ -17662,9 +17662,9 @@ async function run() {
   const assignee = pull_request.assignee
   const reviewersString = core.getInput('reviewers', { required: true });
    // Get issue assignees
-   const reviewers = reviewersString
+   const reviewers = generateMapping(reviewersString
      .split(',')
-     .map((assigneeName) => assigneeName.trim());
+     .map((assigneeName) => assigneeName.trim()));
 
   const { data: consumer, error: consumerError } = await octokit.rest.repos.listCollaborators({
     owner: 'happywait',
@@ -17672,7 +17672,7 @@ async function run() {
   });
 
   errorHandler(pull_request, assignee, reviewers, consumerError, core)
-  
+
   const potentialReviewers = getPotentialReviewers(reviewers.filter(reviewer => reviewer.includes(assignee))[0], assignee)
 
   checkInexistantReviewer(potentialReviewers, consumer)
