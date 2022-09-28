@@ -35,10 +35,9 @@ async function run() {
     owner: github.context.payload.repository.owner.login,
     repo: pull_request.base.repo.name,
     pull_number: pull_request.number,
-    reviewers: potentialReviewers
+    reviewers: potentialReviewers,
+    team_reviewers: []
   })
-  console.log("asked reviewers: ", potentialReviewers)
-  console.log("REST response: ", requestedReviewers);
 
   if(!!requestReviewersError) {
     core.setFailed(requestReviewersError.message);  
