@@ -13,10 +13,12 @@ async function run() {
   //get assigne and reviewer
   const assignee = pull_request.assignee
   const reviewersString = core.getInput('reviewers', { required: true });
-   // Get issue assignees
-   const reviewers = generateMapping(reviewersString
-     .split(',')
-     .map((assigneeName) => assigneeName.trim()));
+
+  
+  // Get issue assignees
+  const reviewers = generateMapping(reviewersString
+    .split(',')
+    .map((assigneeName) => assigneeName.trim()));
 
   const { data: consumer, error: consumerError } = await octokit.rest.repos.listCollaborators({
     owner: 'happywait',

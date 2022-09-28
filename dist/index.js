@@ -34,6 +34,7 @@ const generateMapping = (individuals) => {
 };
 
 const getPotentialReviewers = (reviewerGroup, assigne) => {
+  console.log(reviewerGroup)
   return  reviewerGroup.filter(reviewer => {
     return reviewer !== assigne
   })
@@ -48,11 +49,17 @@ const checkInexistantReviewer =  (reviewers, consumer) => {
   }
 }
 
-const errorHandler = (pull_request, assigne, reviewers, consumerError, core) => {
+const errorHandler = (pull_request, assignee, reviewers, consumerError, core) => {
+
+  console.log(pull_request)
+  console.log(assignee)
+  console.log(reviewers)
+  console.log(core)
+
   if (!pull_request) {
     throw new Error(`Couldn't find PR info in current context`);
   }
-  if (!assigne) {
+  if (!assignee) {
     throw new Error(`Couldn't find any user.`);
   }
   if (!reviewers) {
@@ -17661,10 +17668,12 @@ async function run() {
   //get assigne and reviewer
   const assignee = pull_request.assignee
   const reviewersString = core.getInput('reviewers', { required: true });
-   // Get issue assignees
-   const reviewers = generateMapping(reviewersString
-     .split(',')
-     .map((assigneeName) => assigneeName.trim()));
+
+  
+  // Get issue assignees
+  const reviewers = generateMapping(reviewersString
+    .split(',')
+    .map((assigneeName) => assigneeName.trim()));
 
   const { data: consumer, error: consumerError } = await octokit.rest.repos.listCollaborators({
     owner: 'happywait',
@@ -17694,6 +17703,7 @@ try {
 } catch (error) {
   core.setFailed(error.message);
 }
+
 })();
 
 module.exports = __webpack_exports__;
