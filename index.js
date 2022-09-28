@@ -10,9 +10,8 @@ async function run() {
   
   //get repo info
   const { pull_request } = github.context.payload;
-  
   //get assigne and reviewer
-  const assigne = pull_request.user.login
+  const assignee = pull_request.assignee
   const reviewersString = core.getInput('reviewers', { required: true });
    // Get issue assignees
    const reviewers = reviewersString
@@ -24,9 +23,9 @@ async function run() {
     repo: 'hw-front-consumer',
   });
 
-  errorHandler(pull_request, assigne, reviewers, consumerError, core)
+  errorHandler(pull_request, assignee, reviewers, consumerError, core)
   
-  const potentialReviewers = getPotentialReviewers(reviewers.filter(reviewer => reviewer.includes(assigne))[0], assigne)
+  const potentialReviewers = getPotentialReviewers(reviewers.filter(reviewer => reviewer.includes(assignee))[0], assignee)
 
   checkInexistantReviewer(potentialReviewers, consumer)
 
