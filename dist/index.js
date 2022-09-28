@@ -17653,15 +17653,19 @@ const {getPotentialReviewers, generateMapping, errorHandler, checkInexistantRevi
 
 async function run() {
   // get octokit 
-  const token = core.getInput('github-token');
+  // const token = core.getInput('github-token');
+  const token = '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'
   const octokit = github.getOctokit(token)
   
   //get repo info
   const { pull_request } = github.context.payload;
 
   //get assigne and reviewer
-  const assignee = pull_request.assignee.login
-  const reviewersString = core.getInput('reviewers', { required: true });
+  // const assignee = pull_request.assignee.login
+  const assignee = 'juliavader' 
+  
+  // const reviewersString = core.getInput('reviewers', { required: true });
+  const reviewersString = 'juliavader, bcarrel, codedams, mgouaillierhw, mdeoliveira-hw, gregamann'
   
   // Get issue assignees
   const reviewers = generateMapping(reviewersString
@@ -17673,22 +17677,36 @@ async function run() {
     repo: 'hw-front-consumer',
   });
 
-  errorHandler(pull_request, assignee, reviewers, consumerError, core)
+  // errorHandler(pull_request, assignee, reviewers, consumerError, core)
 
   const potentialReviewers = getPotentialReviewers(reviewers.filter(reviewer => reviewer.includes(assignee))[0], assignee)
 
   checkInexistantReviewer(potentialReviewers, consumer)
 
+  // const request =  octokit.rest.pulls.requestReviewers({
+  //   owner: github.context.payload.repository.owner.login,
+  //   repo: pull_request.base.repo.name,
+  //   pull_number: pull_request.number,
+  //   reviewers: potentialReviewers,
+  //   team_reviewers: []
+  // })
+  // const request =  octokit.rest.pulls.requestReviewers({
+  //   owner: 'happywait',
+  //   repo: 'hw-front-consumer',
+  //   pull_number: '1072',
+  //   reviewers: potentialReviewers,
+  // })
   const request =  octokit.rest.pulls.requestReviewers({
-    owner: github.context.payload.repository.owner.login,
-    repo: pull_request.base.repo.name,
-    pull_number: pull_request.number,
+    owner: 'happywait',
+    repo: 'hw-front-consumer',
+    pull_number: '1072',
     reviewers: potentialReviewers,
-    team_reviewers: []
   })
 
-  console.log("REQUEST REVIEWER BEFORE AWAIT", request);
-  
+
+  // const request = await octokit.request('POST /repos/happywait/hw-front-consumer/pulls/1117/requested_reviewers', {
+  //   reviewers: ['93140043']
+  // })
   const { data: requestedReviewers, error: requestReviewersError } = await request
 
   console.log("REQUEST REVIEWER AFTER AWAIT", requestedReviewers);
