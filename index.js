@@ -9,8 +9,7 @@ async function run() {
   const octokit = github.getOctokit(token)
   
   //get repo info
-  const { pull_request, event } = github.context.payload;
-  console.log("Payload github context:" ,  github.context.payload)
+  const { pull_request } = github.context.payload;
 
   //get assigne and reviewer
   const assignee = pull_request.assignee.login
@@ -29,16 +28,16 @@ async function run() {
   errorHandler(pull_request, assignee, reviewers, consumerError, core)
 
   const potentialReviewers = getPotentialReviewers(reviewers.filter(reviewer => reviewer.includes(assignee))[0], assignee)
-  console.log("asked reviewers: ", potentialReviewers)
 
   checkInexistantReviewer(potentialReviewers, consumer)
 
   const { data: requestedReviewers, error: requestReviewersError } = await octokit.rest.pulls.requestReviewers({
-    owner: github.context.payload.repository_owner,
-    repo: pull_request.base.repo.repository.name,
-    pull_number: github.context.payload.event.number,
+    owner: pull_request.repository.name,
+    repo: pull_request.user.name,
+    pull_number: pull_request.number,
     reviewers: potentialReviewers
   })
+  console.log("asked reviewers: ", potentialReviewers)
   console.log("REST response: ", requestedReviewers);
 
   if(!!requestReviewersError) {
