@@ -17677,20 +17677,20 @@ async function run() {
   errorHandler(pull_request, assignee, reviewers, consumerError, core)
 
   const potentialReviewers = getPotentialReviewers(reviewers.filter(reviewer => reviewer.includes(assignee))[0], assignee)
-  console.log(potentialReviewers)
+  console.log("asked reviewers: ", potentialReviewers)
 
   checkInexistantReviewer(potentialReviewers, consumer)
 
-  try {
-    await octokit.rest.pulls.requestReviewers({
-      owner: github.context.repo.owner,
-      repo: github.context.repo.repo,
-      pull_number: github.context.payload.pull_request.number,
-      reviewers: potentialReviewers
-    })
+  const { data: requestedReviewers, error: requestReviewersError } = await octokit.rest.pulls.requestReviewers({
+    owner: github.context.repo.owner,
+    repo: github.context.repo.repo,
+    pull_number: github.context.payload.pull_request.number,
+    reviewers: potentialReviewers
+  })
+  console.log("REST response: ", requestedReviewers);
 
-  } catch (error) {
-    core.setFailed(error.message);
+  if(!!requestReviewersError) {
+    core.setFailed(requestReviewersError.message);  
   }
 }
 
