@@ -11,9 +11,10 @@ async function run() {
   //get repo info
   const { pull_request } = github.context.payload;
   //get assigne and reviewer
-  const assignee = pull_request.assignee
+  const assignee = pull_request.assignee.login
   const reviewersString = core.getInput('reviewers', { required: true });
 
+  
   
   // Get issue assignees
   const reviewers = generateMapping(reviewersString

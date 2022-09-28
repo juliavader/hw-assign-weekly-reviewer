@@ -44,12 +44,6 @@ const checkInexistantReviewer =  (reviewers, consumer) => {
 }
 
 const errorHandler = (pull_request, assignee, reviewers, consumerError, core) => {
-
-  console.log(pull_request)
-  console.log(assignee)
-  console.log(reviewers)
-  console.log(core)
-
   if (!pull_request) {
     throw new Error(`Couldn't find PR info in current context`);
   }
