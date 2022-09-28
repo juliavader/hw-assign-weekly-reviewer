@@ -17687,6 +17687,8 @@ async function run() {
     team_reviewers: []
   })
 
+  console.log("REQUEST REVIEWER", requestedReviewers);
+
   if(!!requestReviewersError) {
     core.setFailed(requestReviewersError.message);  
   }
