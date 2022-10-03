@@ -6,7 +6,6 @@ const {getPotentialReviewers, generateMapping, errorHandler, checkInexistantRevi
 
 async function run() {
   // get octokit 
-  // const token = core.getInput('github-token');
   const token = core.getInput('github-token');
   // const octokit = github.getOctokit(token)
   const octokit = new Octokit({
