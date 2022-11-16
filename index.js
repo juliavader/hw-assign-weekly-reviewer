@@ -16,8 +16,8 @@ async function run() {
   const { pull_request } = github.context.payload;
 
   //get assigne and reviewer
-  // const assignee = pull_request.assignee.login
-  const assignee = 'juliavader' 
+  const assignee = pull_request.assignee.login
+  // const assignee = 'juliavader' 
   
   // const reviewersString = core.getInput('reviewers', { required: true });
   const reviewersString = 'juliavader, bcarrel, codedams, mgouaillierhw, mdeoliveira-hw, gregamann'
@@ -32,32 +32,30 @@ async function run() {
     repo: 'hw-front-consumer',
   });
 
-  // errorHandler(pull_request, assignee, reviewers, consumerError, core)
+  errorHandler(pull_request, assignee, reviewers, consumerError, core)
 
   const potentialReviewers = getPotentialReviewers(reviewers.filter(reviewer => reviewer.includes(assignee))[0], assignee)
 
   checkInexistantReviewer(potentialReviewers, consumer)
 
-  // const request =  octokit.rest.pulls.requestReviewers({
-  //   owner: github.context.payload.repository.owner.login,
-  //   repo: pull_request.base.repo.name,
-  //   pull_number: pull_request.number,
-  //   reviewers: potentialReviewers,
-  //   team_reviewers: []
-  // })
+  const request =  octokit.rest.pulls.requestReviewers({
+    owner: github.context.payload.repository.owner.login,
+    repo: pull_request.base.repo.name,
+    pull_number: pull_request.number,
+    reviewers: potentialReviewers,
+  })
   // const request =  octokit.rest.pulls.requestReviewers({
   //   owner: 'happywait',
   //   repo: 'hw-front-consumer',
   //   pull_number: '1072',
   //   reviewers: potentialReviewers,
   // })
-  const request = octokit.rest.pulls.requestReviewers({
-    owner: 'happywait',
-    repo: 'hw-front-consumer',
-    pull_number: '1117',
-    reviewers: ['codedams'],
-  })
-
+  // const request = octokit.rest.pulls.requestReviewers({
+  //   owner: 'happywait',
+  //   repo: 'hw-front-consumer',
+  //   pull_number: '1117',
+  //   reviewers: ['codedams'],
+  // })
 
   // const request = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers', {
   //   owner: 'happywait',
