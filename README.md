@@ -14,7 +14,7 @@ Assigns one of the same reviewer weekly to your pull requests.
 
 ## Example usage
 
-uses: actions/hw-assign-weekly-reviewer@v1.1
+uses: actions/hw-assign-weekly-reviewer@v1.0.24
 with:
   reviewers: 'juliavader, bcarrel, codedams, mgouaillierhw, mdeoliveira-hw, gregamann'
   github-token: ${{ secrets.GITHUB_TOKEN }}
