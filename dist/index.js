@@ -19973,6 +19973,7 @@ const {getPotentialReviewers, generateMapping, errorHandler, checkInexistantRevi
 async function run() {
   // get octokit 
   const token = core.getInput('github-token');
+  
   const octokit = new Octokit({
     auth: token
 });
@@ -19991,8 +19992,8 @@ async function run() {
     .map((assigneeName) => assigneeName.trim()));
 
   const { data: consumer, error: consumerError } = await octokit.rest.repos.listCollaborators({
-    owner: 'happywait',
-    repo: 'hw-front-consumer',
+    owner: github.context.payload.repository.owner.login,
+    repo: pull_request.base.repo.name,
   });
 
   errorHandler(pull_request, assignee, reviewers, consumerError, core)
