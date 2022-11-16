@@ -1,6 +1,6 @@
 {
   "name": "hw-assign-weekly-reviewer",
-  "version": "1.0.23",
+  "version": "1.0.25",
   "description": "This project is a github action to assign weekly reviewers",
   "main": "index.js",
   "scripts": {

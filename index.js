@@ -7,7 +7,6 @@ const {getPotentialReviewers, generateMapping, errorHandler, checkInexistantRevi
 async function run() {
   // get octokit 
   const token = core.getInput('github-token');
-  // const octokit = github.getOctokit(token)
   const octokit = new Octokit({
     auth: token
 });
@@ -17,10 +16,8 @@ async function run() {
 
   //get assigne and reviewer
   const assignee = pull_request.assignee.login
-  // const assignee = 'juliavader' 
   
   const reviewersString = core.getInput('reviewers', { required: true });
-  // const reviewersString = 'juliavader, bcarrel, codedams, mgouaillierhw, mdeoliveira-hw, gregamann'
   
   // Get issue assignees
   const reviewers = generateMapping(reviewersString
@@ -44,29 +41,8 @@ async function run() {
     pull_number: pull_request.number,
     reviewers: potentialReviewers,
   })
-  // const request =  octokit.rest.pulls.requestReviewers({
-  //   owner: 'happywait',
-  //   repo: 'hw-front-consumer',
-  //   pull_number: '1072',
-  //   reviewers: potentialReviewers,
-  // })
-  // const request = octokit.rest.pulls.requestReviewers({
-  //   owner: 'happywait',
-  //   repo: 'hw-front-consumer',
-  //   pull_number: '1117',
-  //   reviewers: ['codedams'],
-  // })
 
-  // const request = await octokit.request('POST /repos/{owner}/{repo}/pulls/{pull_number}/requested_reviewers', {
-  //   owner: 'happywait',
-  //   repo: 'hw-front-consumer',
-  //   pull_number: '1117',
-  //   reviewers: ['codedams']
-  // })
   const { data: requestedReviewers, error: requestReviewersError } = await request
-
-  // console.log("REQUEST REVIEWER AFTER AWAIT", requestedReviewers);
-  console.log("REQUEST REVIEWER RESPONSE", requestedReviewers);
 
   if(!!requestReviewersError) {
     core.setFailed(requestReviewersError.message);  
