@@ -19,8 +19,8 @@ async function run() {
   const assignee = pull_request.assignee.login
   // const assignee = 'juliavader' 
   
-  // const reviewersString = core.getInput('reviewers', { required: true });
-  const reviewersString = 'juliavader, bcarrel, codedams, mgouaillierhw, mdeoliveira-hw, gregamann'
+  const reviewersString = core.getInput('reviewers', { required: true });
+  // const reviewersString = 'juliavader, bcarrel, codedams, mgouaillierhw, mdeoliveira-hw, gregamann'
   
   // Get issue assignees
   const reviewers = generateMapping(reviewersString
