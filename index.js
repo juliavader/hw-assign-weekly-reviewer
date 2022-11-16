@@ -25,6 +25,9 @@ async function run() {
     .split(',')
     .map((assigneeName) => assigneeName.trim()));
 
+  console.log(github.context.payload.repository.owner.login)
+  console.log(pull_request.base.repo.name)
+
   const { data: consumer, error: consumerError } = await octokit.rest.repos.listCollaborators({
     owner: github.context.payload.repository.owner.login,
     repo: pull_request.base.repo.name,
